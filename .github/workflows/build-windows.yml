@@ -1,0 +1,28 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches:
+      - main  # 메인 브랜치 푸시될 때 빌드 실행
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Build Windows exe
+        run: go build -o SnakeFyne.exe main.go
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SnakeFyne.exe
+          path: SnakeFyne.exe
